@@ -4,19 +4,22 @@ My answers to the exercises in the book "The Go Programming Language".
 
 ## About the book
 
-The Go Programming Language
-https://www.gopl.io/
+- The Go Programming Language https://www.gopl.io/
+- Alan A. A. Donovan · Brian W. Kernighan
+- Published Oct 26, 2015 by Addison-Wesley
+- ISBN: 978-0134190440
 
-Alan A. A. Donovan · Brian W. Kernighan
-Published Oct 26, 2015 by Addison-Wesley
-ISBN: 978-0134190440
+## Run
+```
+cd path/to/exercise
+go run main.go
+```
 
 ## Run tests
 
 ```
 cd path/to/exercise
 go test
-
 ```
 
 ## Run Benchmark tests
