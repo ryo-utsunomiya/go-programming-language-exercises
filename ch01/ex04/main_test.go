@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestEcho(t *testing.T) {
+func TestDup(t *testing.T) {
 	out := new(bytes.Buffer)
 	Dup(out, []string{"sample1.txt"})
 
