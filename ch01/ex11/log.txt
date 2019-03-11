@@ -1,0 +1,2 @@
+0.36s    6569 https://www.amazon.co.jp/
+0.68s  468769 https://www.amazon.co.jp/
