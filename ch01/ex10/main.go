@@ -15,7 +15,7 @@ func main() {
 	file, err := os.OpenFile("log.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		fmt.Println(err.Error())
-		os.Exit(22)
+		os.Exit(1)
 	}
 	defer file.Close()
 
