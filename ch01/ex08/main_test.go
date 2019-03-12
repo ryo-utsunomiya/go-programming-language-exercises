@@ -9,9 +9,9 @@ import (
 	"testing"
 )
 
-type FakeClient struct{}
+type MockHttpClient struct{}
 
-func (c *FakeClient) Get(url string) (resp *http.Response, err error) {
+func (c *MockHttpClient) Get(url string) (resp *http.Response, err error) {
 	if !strings.HasPrefix(url, "http://") {
 		return nil, errors.New("url must have http prefix")
 	}
@@ -23,7 +23,7 @@ func (c *FakeClient) Get(url string) (resp *http.Response, err error) {
 
 func TestFetch(t *testing.T) {
 	out := new(bytes.Buffer)
-	Fetch(&FakeClient{}, "example.com", out)
+	Fetch(&MockHttpClient{}, "example.com", out)
 
 	got := out.String()
 	want := "<html><html>"

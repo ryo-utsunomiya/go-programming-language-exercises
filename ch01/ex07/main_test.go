@@ -7,9 +7,9 @@ import (
 	"testing"
 )
 
-type FakeClient struct{}
+type MockHttpClient struct{}
 
-func (c *FakeClient) Get(url string) (resp *http.Response, err error) {
+func (c *MockHttpClient) Get(url string) (resp *http.Response, err error) {
 	return &http.Response{
 		Body: ioutil.NopCloser(bytes.NewBufferString("<html><html>")),
 	}, nil
@@ -17,7 +17,7 @@ func (c *FakeClient) Get(url string) (resp *http.Response, err error) {
 
 func TestFetch(t *testing.T) {
 	out := new(bytes.Buffer)
-	Fetch(&FakeClient{}, "https://example.com", out)
+	Fetch(&MockHttpClient{}, "https://example.com", out)
 
 	got := out.String()
 	want := "<html><html>"
