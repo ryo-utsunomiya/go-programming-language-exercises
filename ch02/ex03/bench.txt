@@ -1,7 +1,0 @@
-goos: darwin
-goarch: amd64
-pkg: github.com/ryo-utsunomiya/go-programming-language-exercises/ch02/ex03
-BenchmarkPopCount1-8   	2000000000	         0.62 ns/op
-BenchmarkPopCount2-8   	100000000	        17.6 ns/op
-PASS
-ok  	github.com/ryo-utsunomiya/go-programming-language-exercises/ch02/ex03	3.086s

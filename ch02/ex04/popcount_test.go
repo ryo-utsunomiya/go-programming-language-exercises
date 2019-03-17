@@ -18,6 +18,6 @@ func BenchmarkPopCount2(b *testing.B) {
 
 func BenchmarkPopCount3(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		PopCount2(uint64(i))
+		PopCount3(uint64(i))
 	}
 }
