@@ -6,6 +6,8 @@ var commaTests = []struct {
 	a, b string
 	want bool
 }{
+	{"aba", "baa", true},
+	{"aaa", "baa", false},
 	{"however", "whoever", true},
 	{"nowhere", "now here", false},
 }
