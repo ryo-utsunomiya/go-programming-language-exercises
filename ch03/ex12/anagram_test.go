@@ -6,10 +6,13 @@ var commaTests = []struct {
 	a, b string
 	want bool
 }{
+	{"", "", true},
 	{"aba", "baa", true},
 	{"aaa", "baa", false},
 	{"however", "whoever", true},
 	{"nowhere", "now here", false},
+	{"こんにちは", "はちにんこ", true},
+	{"こんにちは", "こんばんは", false},
 }
 
 func TestIsAnagram(t *testing.T) {
