@@ -14,12 +14,5 @@ const (
 )
 
 func main() {
-	fmt.Println(KB)
-	fmt.Println(MB)
-	fmt.Println(GB)
-	fmt.Println(TB)
-	fmt.Println(PB)
-	fmt.Println(EB)
-	fmt.Println(ZB)
-	fmt.Println(YB)
+	fmt.Println(KB, MB, GB, TB, PB, EB, ZB, YB)
 }
