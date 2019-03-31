@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"sort"
 	"strings"
 )
 
@@ -11,22 +10,15 @@ func IsAnagram(a, b string) bool {
 		return false
 	}
 
-	as := strings.Split(a, "")
-	bs := strings.Split(b, "")
-	sort.Slice(as, func(i, j int) bool {
-		return as[i] < as[j]
-	})
-	sort.Slice(bs, func(i, j int) bool {
-		return bs[i] < bs[j]
-	})
-
-	for i, _ := range as {
-		if as[i] != bs[i] {
+	tmp := b
+	for _, r := range a {
+		if !strings.ContainsRune(tmp, r) {
 			return false
 		}
+		tmp = strings.Replace(tmp, string(r), "", 1)
 	}
 
-	return true
+	return tmp == ""
 }
 
 func main() {
