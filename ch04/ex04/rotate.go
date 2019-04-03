@@ -1,7 +1,7 @@
 package main
 
 func Rotate(s []int, n int) {
-	for n > len(s) {
+	if n > len(s) {
 		n = n % len(s)
 	}
 	if n == 0 {
