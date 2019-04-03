@@ -29,20 +29,19 @@ func wordfreq(name string) {
 		words[input.Text()]++
 	}
 
-	// sort by freq
 	type KV struct {
 		k string
 		v int
 	}
-	var ss []KV
+	var sorted []KV
 	for k, v := range words {
-		ss = append(ss, KV{k, v})
+		sorted = append(sorted, KV{k, v})
 	}
-	sort.Slice(ss, func(i, j int) bool {
-		return ss[i].v > ss[j].v
+	sort.Slice(sorted, func(i, j int) bool {
+		return sorted[i].v > sorted[j].v
 	})
 
-	for _, kv := range ss {
+	for _, kv := range sorted {
 		fmt.Printf("%q\t%d\n", kv.k, kv.v)
 	}
 }
