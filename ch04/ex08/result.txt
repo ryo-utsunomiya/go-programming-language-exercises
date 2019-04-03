@@ -1,0 +1,21 @@
+$ echo '1１一壱๑' | go run charcount.go
+rune	count
+'一'	1
+'壱'	1
+'๑'	1
+'\n'	1
+'1'	1
+'１'	1
+letters	count
+'一'	1
+'壱'	1
+numbers	count
+'1'	1
+'１'	1
+'๑'	1
+
+len	count
+1	2
+2	0
+3	4
+4	0
