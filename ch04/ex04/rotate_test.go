@@ -41,9 +41,9 @@ func TestRotate(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		Rotate(test.s, test.n)
-		if !equals(test.s, test.want) {
-			t.Errorf("case %s: got %v, want %v", fmt.Sprintf("%v", test.s), test.want, test.s)
+		got := Rotate(test.s, test.n)
+		if !equals(got, test.want) {
+			t.Errorf("case %s: got %v, want %v", fmt.Sprintf("%v", got), test.want, got)
 		}
 	}
 }

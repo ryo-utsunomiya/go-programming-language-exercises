@@ -1,14 +1,13 @@
 package main
 
-func Rotate(s []int, n int) {
+func Rotate(s []int, n int) []int {
 	if n > len(s) {
 		n = n % len(s)
 	}
 	if n == 0 {
-		return
+		return s
 	}
 
-	tmp := s[n:]
-	tmp = append(tmp, s[:n]...)
-	copy(s, tmp)
+	s = append(s, s[:n]...)
+	return s[n:]
 }
