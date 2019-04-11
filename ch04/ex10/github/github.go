@@ -64,7 +64,7 @@ func (r *IssuesSearchResult) CreatedInAYear() Issues {
 	})
 }
 
-func (r *IssuesSearchResult) CreatedAYearAgo() []*Issue {
+func (r *IssuesSearchResult) CreatedAYearAgo() Issues {
 	return r.Items.Filter(func(issue *Issue) bool {
 		return issue.CreatedAt.Before(aYearAgo)
 	})
