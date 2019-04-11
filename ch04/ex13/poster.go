@@ -9,9 +9,6 @@ import (
 	"os"
 )
 
-// 練習問題4.13 Open Movie Databaseの https://omdbapi.com から
-// コマンドラインで指定した映画のポスター画像をダウンロードするツール
-// posterを書きなさい
 func main() {
 	if len(os.Args) < 2 {
 		fmt.Println("Usage: poster {title}")
