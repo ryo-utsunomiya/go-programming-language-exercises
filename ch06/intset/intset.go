@@ -9,19 +9,19 @@ type IntSet struct {
 	words []uint
 }
 
-var div int
+var bitsize int
 
 func init() {
-	div = 32 << (^uint(0) >> 63)
+	bitsize = 32 << (^uint(0) >> 63)
 }
 
 func (s *IntSet) Has(x int) bool {
-	word, bit := x/div, uint(x%div)
+	word, bit := x/bitsize, uint(x%bitsize)
 	return word < len(s.words) && s.words[word]&(1<<bit) != 0
 }
 
 func (s *IntSet) Add(x int) {
-	word, bit := x/div, uint(x%div)
+	word, bit := x/bitsize, uint(x%bitsize)
 	for word >= len(s.words) {
 		s.words = append(s.words, 0)
 	}
@@ -97,7 +97,7 @@ func (s *IntSet) Len() int {
 		if word == 0 {
 			continue
 		}
-		for j := 0; j < 64; j++ {
+		for j := 0; j < bitsize; j++ {
 			if word&(1<<uint(j)) != 0 {
 				result++
 			}
@@ -107,7 +107,7 @@ func (s *IntSet) Len() int {
 }
 
 func (s *IntSet) Remove(x int) {
-	word, bit := x/64, uint(x%64)
+	word, bit := x/bitsize, uint(x%bitsize)
 	if word < len(s.words) {
 		s.words[word] &^= 1 << bit
 	}
@@ -133,26 +133,11 @@ func (s *IntSet) Elems() []uint {
 		if word == 0 {
 			continue
 		}
-		for j := 0; j < 64; j++ {
+		for j := 0; j < bitsize; j++ {
 			if word&(1<<uint(j)) != 0 {
-				result = append(result, uint(64*i+j))
+				result = append(result, uint(bitsize*i+j))
 			}
 		}
 	}
 	return result
-}
-
-func main() {
-	var x, y IntSet
-
-	x.Add(1)
-	x.Add(144)
-	x.Add(9)
-	//fmt.Println(x.String())
-
-	y.Add(9)
-	y.Add(42)
-	//fmt.Println(y.String())
-
-	fmt.Println(x.Elems(), y.Elems())
 }
