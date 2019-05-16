@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 )
 
 type ByteCounter int
@@ -14,22 +13,50 @@ func (c *ByteCounter) Write(p []byte) (int, error) {
 
 type WordCounter int
 
-// bufio.ScanWords
 func (c *WordCounter) Write(p []byte) (int, error) {
-	advance, _, err := bufio.ScanWords(p, false)
-	if err != nil {
-		return 0, err
+	if len(p) == 0 {
+		return 0, nil
 	}
-	return advance, nil
+
+	for tmp := p; ; {
+		advance, token, err := bufio.ScanWords(tmp, false)
+		if err != nil {
+			return 0, err
+		}
+
+		*c++
+
+		if len(token) == 0 {
+			break
+		}
+
+		tmp = tmp[advance:]
+	}
+
+	return len(p), nil
 }
 
-func main() {
-	var c ByteCounter
-	c.Write([]byte("hello"))
-	fmt.Println(c)
+type LineCounter int
 
-	c = 0
-	var name = "Dolly"
-	fmt.Fprintf(&c, "hello, %s", name)
-	fmt.Println(c)
+func (c *LineCounter) Write(p []byte) (int, error) {
+	if len(p) == 0 {
+		return 0, nil
+	}
+
+	for tmp := p; ; {
+		advance, token, err := bufio.ScanLines(tmp, false)
+		if err != nil {
+			return 0, err
+		}
+
+		*c++
+
+		if len(token) == 0 {
+			break
+		}
+
+		tmp = tmp[advance:]
+	}
+
+	return len(p), nil
 }
