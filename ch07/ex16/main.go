@@ -13,24 +13,30 @@ import (
 func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		exprStr := r.FormValue("expr")
-		if exprStr == "" {
-			w.WriteHeader(http.StatusBadRequest)
-			return
-		}
+		envStr := r.FormValue("env")
 
-		env, err := parseEnv(r.FormValue("env"))
+		log.Printf("expr: %s\n", exprStr)
+		log.Printf("env: %s\n", envStr)
+
+		env, err := parseEnv(envStr)
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
+			fmt.Fprint(w, err.Error())
 			return
 		}
 
 		expr, err := eval.Parse(exprStr)
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
+			fmt.Fprintln(w,"parse expr error")
+			fmt.Fprint(w, err.Error())
 			return
 		}
 
-		fmt.Fprint(w, expr.Eval(env))
+		result := expr.Eval(env)
+
+		log.Printf("result:%f\n", result)
+		fmt.Fprint(w, result)
 	})
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
