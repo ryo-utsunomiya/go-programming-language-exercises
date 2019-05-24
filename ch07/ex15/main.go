@@ -24,26 +24,35 @@ func main() {
 		os.Exit(1)
 	}
 
-	env := eval.Env{}
-	for _, a := range strings.Fields(envStr) {
-		fields := strings.Split(a, "=")
-		if len(fields) != 2 {
-			fmt.Fprintf(os.Stderr, "invalid var %s\n", a)
-			os.Exit(1)
-		}
-		val, err := strconv.ParseFloat(fields[1], 64)
-		if err != nil {
-			fmt.Fprintf(os.Stderr, err.Error())
-			os.Exit(1)
-		}
-		env[eval.Var(fields[0])] = val
-	}
-
 	expr, err := eval.Parse(exprStr)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, err.Error())
 		os.Exit(1)
 	}
 
+	env, err := parseEnv(envStr)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, err.Error())
+		os.Exit(1)
+	}
+
 	fmt.Println(expr.Eval(env))
+}
+
+func parseEnv(envStr string) (eval.Env, error) {
+	env := eval.Env{}
+
+	for _, a := range strings.Fields(envStr) {
+		fields := strings.Split(a, "=")
+		if len(fields) != 2 {
+			return nil, fmt.Errorf("invalid var %s", a)
+		}
+		val, err := strconv.ParseFloat(fields[1], 64)
+		if err != nil {
+			return nil, err
+		}
+		env[eval.Var(fields[0])] = val
+	}
+
+	return env, nil
 }
