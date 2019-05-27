@@ -45,16 +45,18 @@ func server(c net.Conn) {
 	}
 }
 
-func processCommand(w io.Writer, cmd string) {
+func processCommand(c net.Conn, cmd string) {
 	switch cmd {
 	case "pwd":
 		pwd, err := os.Getwd()
 		if err != nil {
 			return
 		}
-		mustPrint(w, pwd)
+		mustPrint(c, pwd)
+	case "close":
+		c.Close()
 	default:
-		mustPrint(w, fmt.Sprintf("unknown command: %s", cmd))
+		mustPrint(c, fmt.Sprintf("unknown command: %s", cmd))
 	}
 }
 

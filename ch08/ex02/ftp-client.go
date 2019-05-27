@@ -33,7 +33,7 @@ func main() {
 
 		b, _, err := c.ReadLine()
 		if err != nil {
-			log.Fatal(err)
+			break
 		}
 		fmt.Println(string(b))
 
