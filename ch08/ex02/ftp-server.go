@@ -8,7 +8,10 @@ import (
 	"log"
 	"net"
 	"os"
+	"strings"
 )
+
+const CRLF = "\r\n"
 
 func main() {
 	var (
@@ -34,6 +37,7 @@ func main() {
 }
 
 func server(c net.Conn) {
+	mustWrite(c, "220 Ready.")
 	b := bufio.NewReader(c)
 
 	for {
@@ -46,23 +50,23 @@ func server(c net.Conn) {
 }
 
 func processCommand(c net.Conn, cmd string) {
-	switch cmd {
+	switch strings.ToLower(cmd) {
 	case "pwd":
 		pwd, err := os.Getwd()
 		if err != nil {
 			return
 		}
-		mustPrint(c, pwd)
+		mustWrite(c, fmt.Sprintf("257 %s", pwd))
 	case "close":
 		c.Close()
 	default:
-		mustPrint(c, fmt.Sprintf("unknown command: %s", cmd))
+		mustWrite(c, "502 Command not implemented")
 	}
 }
 
-func mustPrint(w io.Writer, text string) {
+func mustWrite(w io.Writer, text string) {
 	fmt.Println(text)
-	_, err := w.Write([]byte(text + "\r\n"))
+	_, err := w.Write([]byte(text + CRLF))
 	if err != nil {
 		log.Fatal(err)
 	}
