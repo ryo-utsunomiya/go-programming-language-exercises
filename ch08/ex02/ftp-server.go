@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"log"
 	"net"
 	"os"
@@ -57,15 +58,32 @@ func processCommand(c net.Conn, cmd string) {
 			return
 		}
 		mustWrite(c, fmt.Sprintf("257 %s", pwd))
+	case "list":
+		pwd, err := os.Getwd()
+		if err != nil {
+			return
+		}
+
+		files, err := ioutil.ReadDir(pwd)
+		if err != nil {
+			return
+		}
+
+		// todo: use data connection
+		for _, file := range files {
+			mustWrite(c, file.Name())
+		}
+		mustWrite(c, "226 Closing data connection.")
+
 	case "close":
 		c.Close()
 	default:
-		mustWrite(c, "502 Command not implemented")
+		mustWrite(c, "502 Command not implemented.")
 	}
 }
 
 func mustWrite(w io.Writer, text string) {
-	fmt.Println(text)
+	log.Print(text)
 	_, err := w.Write([]byte(text + CRLF))
 	if err != nil {
 		log.Fatal(err)

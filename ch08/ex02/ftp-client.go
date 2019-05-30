@@ -21,9 +21,15 @@ func main() {
 	}
 	defer conn.Close()
 
-	fmt.Print("ftp>")
-
 	c := bufio.NewReader(conn)
+
+	b, _, err := c.ReadLine()
+	if err != nil {
+		log.Print(err)
+	}
+	fmt.Println(string(b))
+
+	fmt.Print("ftp>")
 	s := bufio.NewScanner(os.Stdin)
 	for s.Scan() {
 		_, err := conn.Write([]byte(s.Text() + "\r\n"))
