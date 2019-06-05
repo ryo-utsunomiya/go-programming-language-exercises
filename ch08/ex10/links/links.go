@@ -13,9 +13,8 @@ func Extract(url string, ctx context.Context) ([]string, error) {
 	if err != nil {
 		return nil, err
 	}
-	req = req.WithContext(ctx)
 
-	resp, err := http.DefaultClient.Do(req)
+	resp, err := http.DefaultClient.Do(req.WithContext(ctx))
 	if err != nil {
 		return nil, err
 	}
