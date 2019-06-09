@@ -37,14 +37,14 @@ import (
 func TestWithDraw(t *testing.T) {
 	bank.Deposit(200)
 
-	if bank.WithDraw(100) != true {
+	if bank.Withdraw(100) != true {
 		t.Error("want: true, got: false")
 	}
 	if bank.Balance() != 100 {
 		t.Error("want: 100, got: 100")
 	}
 
-	if bank.WithDraw(300) != false {
+	if bank.Withdraw(300) != false {
 		t.Error("want: true, got: false")
 	}
 	if bank.Balance() != 100 {

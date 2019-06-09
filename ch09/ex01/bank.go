@@ -7,19 +7,19 @@
 // Package bank provides a concurrency-safe bank with one account.
 package bank
 
-type WithDrawResult struct {
+type WithdrawResult struct {
 	amount    int
 	isSuccess chan bool
 }
 
 var deposits = make(chan int) // send amount to deposit
 var balances = make(chan int) // receive balance
-var withdraws = make(chan WithDrawResult)
+var withdraws = make(chan WithdrawResult)
 
 func Deposit(amount int) { deposits <- amount }
-func WithDraw(amount int) bool {
+func Withdraw(amount int) bool {
 	isSuccess := make(chan bool)
-	withdraws <- WithDrawResult{amount, isSuccess}
+	withdraws <- WithdrawResult{amount, isSuccess}
 	return <-isSuccess
 }
 func Balance() int { return <-balances }
