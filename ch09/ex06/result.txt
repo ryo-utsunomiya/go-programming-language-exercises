@@ -1,0 +1,17 @@
+$ time go run mandelbrot.go > /dev/null
+go run mandelbrot.go > /dev/null  2.25s user 0.27s system 315% cpu 0.797 total
+$ export GOMAXPROCS=1
+$ time go run mandelbrot.go > /dev/null
+go run mandelbrot.go > /dev/null  1.53s user 0.23s system 107% cpu 1.634 total
+$ export GOMAXPROCS=2
+$ time go run mandelbrot.go > /dev/null
+go run mandelbrot.go > /dev/null  1.52s user 0.25s system 168% cpu 1.056 total
+$ export GOMAXPROCS=4
+$ time go run mandelbrot.go > /dev/null
+go run mandelbrot.go > /dev/null  1.60s user 0.26s system 224% cpu 0.826 total
+$ export GOMAXPROCS=8
+$ time go run mandelbrot.go > /dev/null
+go run mandelbrot.go > /dev/null  2.19s user 0.24s system 315% cpu 0.769 total
+$ export GOMAXPROCS=16
+$ time go run mandelbrot.go > /dev/null
+go run mandelbrot.go > /dev/null  2.23s user 0.26s system 324% cpu 0.765 total
