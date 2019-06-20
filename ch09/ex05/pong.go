@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"time"
 )
@@ -10,26 +11,33 @@ func main() {
 	pong := make(chan struct{})
 	cnt := 0
 
+	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+	defer cancel()
+
 	go func() {
 		for {
-			cnt++
-			pong <- <-ping
+			select {
+			case <-ctx.Done():
+				break
+			default:
+				pong <- <-ping
+			}
 		}
 	}()
 	go func() {
 		for {
-			ping <- <-pong
+			select {
+			case <-ctx.Done():
+				break
+			default:
+				ping <- <-pong
+				cnt++
+			}
 		}
-	}()
-
-	quits := make(chan struct{})
-
-	go func() {
-		time.Sleep(1 * time.Second)
-		quits <- struct{}{}
 	}()
 
 	ping <- struct{}{}
-	<-quits
-	fmt.Println(cnt) // 2267670
+
+	<-ctx.Done()
+	fmt.Println(cnt) // 1967254
 }
