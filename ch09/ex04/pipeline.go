@@ -17,6 +17,7 @@ func pipeline(n int) (in chan int, out chan int) {
 }
 
 func main() {
+	// took 7.2s, used 2.5GB memory
 	in, out := pipeline(1000000)
 	in <- 1
 	<-out
