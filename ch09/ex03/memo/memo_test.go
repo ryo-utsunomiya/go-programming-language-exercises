@@ -10,7 +10,9 @@ import (
 	"github.com/ryo-utsunomiya/go-programming-language-exercises/ch09/ex03/memo/memotest"
 )
 
-var httpGetBody = memotest.HTTPGetBody
+var httpGetBody = func(key string, done <-chan struct{}) (interface{}, error) {
+	return memotest.HTTPGetBody(key)
+}
 
 func Test(t *testing.T) {
 	m := memo.New(httpGetBody)
