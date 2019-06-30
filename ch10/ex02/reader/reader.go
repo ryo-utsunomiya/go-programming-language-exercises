@@ -19,18 +19,18 @@ func Read(name string, out io.Writer) error {
 
 	r := bufio.NewReader(f)
 
-	var found *registry.Format
+	var format *registry.Format
 	for _, f := range registry.GetAllFormats() {
 		p, err := r.Peek(f.MagicOffset + len(f.Magic))
 		if err != nil {
 			continue
 		}
 		if string(p[f.MagicOffset:]) == f.Magic {
-			found = &f
+			format = &f
 			break
 		}
 	}
-	if found == nil {
+	if format == nil {
 		return fmt.Errorf("unknown format")
 	}
 
@@ -39,7 +39,7 @@ func Read(name string, out io.Writer) error {
 		return err
 	}
 
-	if err := found.Read(f, out); err != nil {
+	if err := format.Read(f, out); err != nil {
 		return err
 	}
 
